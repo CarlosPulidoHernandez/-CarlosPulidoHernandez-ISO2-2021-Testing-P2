@@ -6,13 +6,13 @@ public class Transport {
 	private int normalSeats;
 	private int essentialProfessionsSeats;
 	private int level;
-	private float ticketPrice;
+	private double ticketPrice;
 	
-	public Transport(int totalNumberSeats, float ticketPrice) throws NegativeValueException {
+	public Transport(int totalNumberSeats, double ticketPrice) throws NegativeValueException {
 		this.totalNumberSeats = totalNumberSeats;
 		this.ticketPrice = ticketPrice;	
-		if(this.totalNumberSeats < 0 || this.ticketPrice <0) {
-			throw new NegativeValueException("A variable can not get negative values");
+		if(this.totalNumberSeats < 0 || this.ticketPrice < 0) {
+			throw new NegativeValueException("Variables can not get negative values");
 		}
 		calculateAvailableSeats();
 	}
@@ -45,38 +45,15 @@ public class Transport {
 		}
 		
 	}
-		
-	public double calculateTicketCost(Person person) throws NoSeatsAvailableException, NotHealthyException {
-		double price = 0;
-		
-		
-		if(!person.isCOVIDPassport() || person.isIll()) {
-			throw new NotHealthyException("You are not allowed to travel in those conditions");
-		}
 	
-		if(person.isEssentialProfession()) {
-			if(this.level == 2 || this.level == 3 || this.level == 4) {
-				if((this.essentialProfessionsSeats-1)>=0) {
-					this.essentialProfessionsSeats -= 1;
-				}else if((this.normalSeats-1)>=0) {
-					this.normalSeats -= 1;
-				}else {
-					throw new NoSeatsAvailableException("There are no seats available");
-				}
-			}else {
-				if((this.normalSeats-1)>=0) {
-					this.normalSeats -= 1;
-				}else {
-					throw new NoSeatsAvailableException("There are no seats available");
-				}
-			}
-		}else {
-			if((this.normalSeats-1)>=0) {
-				this.normalSeats -= 1;
-			}else {
-				throw new NoSeatsAvailableException("There are no seats available");
-			}
-		}
+	public double getTicket(Person person) throws NotHealthyException, NoSeatsAvailableException {
+		checkHealthConditions(person);	
+		assignSeat(person);
+		return calculateTicketCost(person);
+	}
+		
+	public double calculateTicketCost(Person person) throws NoSeatsAvailableException {
+		double price = 0;
 	
 		if(this.level == 0) {
 			if(person.getAge() < 23) {
@@ -120,6 +97,46 @@ public class Transport {
 		
 		return price;
 	}
+	
+	public void checkHealthConditions(Person person) throws NotHealthyException {	
+		if(!person.isCOVIDPassport() || person.isIll()) {
+			throw new NotHealthyException("You are not allowed to travel in those conditions");
+		}
+	}
+	
+	public void assignSeat(Person person) throws NoSeatsAvailableException {	
+		if(person.isEssentialProfession() && (this.level == 2 || this.level == 3 || this.level == 4)) {
+			if(isEssentialProfessionsSeats()) {
+				this.essentialProfessionsSeats -= 1;
+			}else if(isNormalSeats()) {
+				this.normalSeats -= 1;
+			}else {
+				throw new NoSeatsAvailableException("There are no seats available");
+			}
+		}else {
+			if(isNormalSeats()) {
+				this.normalSeats -= 1;
+			}else {
+				throw new NoSeatsAvailableException("There are no seats available");
+			}
+		}
+	}
+		
+	public boolean isNormalSeats(){
+		if(this.normalSeats-1 >= 0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	public boolean isEssentialProfessionsSeats(){
+		if(this.essentialProfessionsSeats-1 >= 0){
+			return true;
+		}else{
+			return false;
+		}
+	}
 
 	public int getTotalNumberSeats() {
 		return totalNumberSeats;
@@ -153,7 +170,7 @@ public class Transport {
 		this.level = level;
 	}
 
-	public float getTicketPrice() {
+	public double getTicketPrice() {
 		return ticketPrice;
 	}
 
