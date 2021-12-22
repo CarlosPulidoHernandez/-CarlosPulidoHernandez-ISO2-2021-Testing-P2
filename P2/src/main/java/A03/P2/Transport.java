@@ -8,11 +8,11 @@ public class Transport {
 	private int level;
 	private double ticketPrice;
 	
-	public Transport(int totalNumberSeats, double ticketPrice) throws NegativeValueException {
+	public Transport(int totalNumberSeats, double ticketPrice) throws NotAllowedValueException {
 		this.totalNumberSeats = totalNumberSeats;
 		this.ticketPrice = ticketPrice;	
 		if(this.totalNumberSeats < 0 || this.ticketPrice < 0) {
-			throw new NegativeValueException("Variables can not get negative values");
+			throw new NotAllowedValueException("Variables can not get negative values");
 		}
 		calculateAvailableSeats();
 	}
@@ -142,40 +142,27 @@ public class Transport {
 		return totalNumberSeats;
 	}
 
-	public void setTotalNumberSeats(int totalNumberSeats) {
-		this.totalNumberSeats = totalNumberSeats;
-	}
-
 	public int getNormalSeats() {
 		return normalSeats;
-	}
-
-	public void setNormalSeats(int normalSeats) {
-		this.normalSeats = normalSeats;
 	}
 
 	public int getEssentialProfessionsSeats() {
 		return essentialProfessionsSeats;
 	}
 
-	public void setEssentialProfessionsSeats(int essentialProfessionsSeats) {
-		this.essentialProfessionsSeats = essentialProfessionsSeats;
-	}
-
 	public int getLevel() {
 		return level;
 	}
 
-	public void setLevel(int level) {
+	public void setLevel(int level) throws NotAllowedValueException {
+		if(level < 0 || level > 4) {
+			throw new NotAllowedValueException("Level mut be between 0 and 4");
+		}
 		this.level = level;
 	}
 
 	public double getTicketPrice() {
 		return ticketPrice;
-	}
-
-	public void setTicketPrice(float ticketPrice) {
-		this.ticketPrice = ticketPrice;
 	}
 			
 }
