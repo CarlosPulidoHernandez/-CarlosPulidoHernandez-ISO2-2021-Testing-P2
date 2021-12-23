@@ -8,11 +8,11 @@ public class Transport {
 	private int level;
 	private double ticketPrice;
 	
-<span class="fc" id="L11">	public Transport(int totalNumberSeats, double ticketPrice) throws NegativeValueException {</span>
+<span class="fc" id="L11">	public Transport(int totalNumberSeats, double ticketPrice) throws NotAllowedValueException {</span>
 <span class="fc" id="L12">		this.totalNumberSeats = totalNumberSeats;</span>
 <span class="fc" id="L13">		this.ticketPrice = ticketPrice;	</span>
 <span class="pc bpc" id="L14" title="2 of 4 branches missed.">		if(this.totalNumberSeats &lt; 0 || this.ticketPrice &lt; 0) {</span>
-<span class="nc" id="L15">			throw new NegativeValueException(&quot;Variables can not get negative values&quot;);</span>
+<span class="nc" id="L15">			throw new NotAllowedValueException(&quot;Variables can not get negative values&quot;);</span>
 		}
 <span class="fc" id="L17">		calculateAvailableSeats();</span>
 <span class="fc" id="L18">	}</span>
@@ -105,9 +105,9 @@ public class Transport {
 <span class="fc" id="L105">	}</span>
 	
 	public void assignSeat(Person person) throws NoSeatsAvailableException {	
-<span class="pc bpc" id="L108" title="7 of 8 branches missed.">		if(person.isEssentialProfession() &amp;&amp; (this.level == 2 || this.level == 3 || this.level == 4)) {</span>
-<span class="nc bnc" id="L109" title="All 2 branches missed.">			if(isEssentialProfessionsSeats()) {</span>
-<span class="nc" id="L110">				this.essentialProfessionsSeats -= 1;</span>
+<span class="fc bfc" id="L108" title="All 8 branches covered.">		if(person.isEssentialProfession() &amp;&amp; (this.level == 2 || this.level == 3 || this.level == 4)) {</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">			if(isEssentialProfessionsSeats()) {</span>
+<span class="fc" id="L110">				this.essentialProfessionsSeats -= 1;</span>
 <span class="nc bnc" id="L111" title="All 2 branches missed.">			}else if(isNormalSeats()) {</span>
 <span class="nc" id="L112">				this.normalSeats -= 1;</span>
 			}else {
@@ -131,8 +131,8 @@ public class Transport {
 	}
 	
 	public boolean isEssentialProfessionsSeats(){
-<span class="nc bnc" id="L134" title="All 2 branches missed.">		if(this.essentialProfessionsSeats-1 &gt;= 0){</span>
-<span class="nc" id="L135">			return true;</span>
+<span class="pc bpc" id="L134" title="1 of 2 branches missed.">		if(this.essentialProfessionsSeats-1 &gt;= 0){</span>
+<span class="fc" id="L135">			return true;</span>
 		}else{
 <span class="nc" id="L137">			return false;</span>
 		}
@@ -142,41 +142,28 @@ public class Transport {
 <span class="nc" id="L142">		return totalNumberSeats;</span>
 	}
 
-	public void setTotalNumberSeats(int totalNumberSeats) {
-<span class="nc" id="L146">		this.totalNumberSeats = totalNumberSeats;</span>
-<span class="nc" id="L147">	}</span>
-
 	public int getNormalSeats() {
-<span class="nc" id="L150">		return normalSeats;</span>
+<span class="nc" id="L146">		return normalSeats;</span>
 	}
-
-	public void setNormalSeats(int normalSeats) {
-<span class="nc" id="L154">		this.normalSeats = normalSeats;</span>
-<span class="nc" id="L155">	}</span>
 
 	public int getEssentialProfessionsSeats() {
-<span class="nc" id="L158">		return essentialProfessionsSeats;</span>
+<span class="nc" id="L150">		return essentialProfessionsSeats;</span>
 	}
-
-	public void setEssentialProfessionsSeats(int essentialProfessionsSeats) {
-<span class="nc" id="L162">		this.essentialProfessionsSeats = essentialProfessionsSeats;</span>
-<span class="nc" id="L163">	}</span>
 
 	public int getLevel() {
-<span class="nc" id="L166">		return level;</span>
+<span class="nc" id="L154">		return level;</span>
 	}
 
-	public void setLevel(int level) {
-<span class="nc" id="L170">		this.level = level;</span>
-<span class="nc" id="L171">	}</span>
+	public void setLevel(int level) throws NotAllowedValueException {
+<span class="pc bpc" id="L158" title="1 of 4 branches missed.">		if(level &lt; 0 || level &gt; 4) {</span>
+<span class="fc" id="L159">			throw new NotAllowedValueException(&quot;Level mut be between 0 and 4&quot;);</span>
+		}
+<span class="nc" id="L161">		this.level = level;</span>
+<span class="nc" id="L162">	}</span>
 
 	public double getTicketPrice() {
-<span class="nc" id="L174">		return ticketPrice;</span>
+<span class="nc" id="L165">		return ticketPrice;</span>
 	}
-
-	public void setTicketPrice(float ticketPrice) {
-<span class="nc" id="L178">		this.ticketPrice = ticketPrice;</span>
-<span class="nc" id="L179">	}</span>
 			
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

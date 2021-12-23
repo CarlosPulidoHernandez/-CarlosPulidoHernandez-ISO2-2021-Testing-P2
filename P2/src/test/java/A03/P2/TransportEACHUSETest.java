@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class TransportTestEACHUSE {
+public class TransportEACHUSETest {
 	
 	// Each use coverage
 

@@ -4,7 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-public class TransportTestPairwise {
+public class TransportPairwiseTest {
 	
 	// Pairwise tests
 	

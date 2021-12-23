@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class TransportTestMCDC {
+public class TransportMCDCTest {
 	
 	// MCDC coverage
 

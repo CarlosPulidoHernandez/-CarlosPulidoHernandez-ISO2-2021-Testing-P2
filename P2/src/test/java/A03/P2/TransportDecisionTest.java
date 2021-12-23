@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class TransportTest {
+public class TransportDecisionTest {
 
 	// Decision coverage Tests
 	
