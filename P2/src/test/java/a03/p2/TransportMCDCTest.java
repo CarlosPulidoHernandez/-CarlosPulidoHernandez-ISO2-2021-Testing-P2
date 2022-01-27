@@ -1,8 +1,14 @@
-package A03.P2;
+package a03.p2;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import a03.p2.NoSeatsAvailableException;
+import a03.p2.NotAllowedValueException;
+import a03.p2.NotHealthyException;
+import a03.p2.Person;
+import a03.p2.Transport;
 
 public class TransportMCDCTest {
 	
