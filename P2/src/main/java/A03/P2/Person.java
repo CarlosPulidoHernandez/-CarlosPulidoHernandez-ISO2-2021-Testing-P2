@@ -2,15 +2,15 @@ package A03.P2;
 
 public class Person {
 	
-	private final int age;
-	private final boolean essentProf;
-	private final boolean covidPass;
-	private final boolean ill;
+	private int age;
+	private boolean essentialProfession;
+	private boolean COVIDPassport;
+	private boolean ill;
 	
-	public Person(final int age, final boolean essentProf, final boolean covidPass, final boolean ill) {
+	public Person(int age, boolean essentialProfession, boolean COVIDPassport, boolean ill) {
 		this.age = age;
-		this.essentProf = essentProf;
-		this.covidPass = covidPass;
+		this.essentialProfession = essentialProfession;
+		this.COVIDPassport = COVIDPassport;
 		this.ill = ill;
 	}
 	
@@ -19,11 +19,11 @@ public class Person {
 	}
 	
 	public boolean isEssentialProfession() {
-		return essentProf;
+		return essentialProfession;
 	}
 
 	public boolean isCOVIDPassport() {
-		return covidPass;
+		return COVIDPassport;
 	}
 
 	public boolean isIll() {

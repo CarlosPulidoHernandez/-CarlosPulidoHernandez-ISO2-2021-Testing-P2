@@ -1,7 +1,7 @@
 package A03.P2;
 
 public class NotHealthyException extends Exception {
-	public NotHealthyException(final String errorMessage) {
+	public NotHealthyException(String errorMessage) {
 		super(errorMessage);
 	}
 }
