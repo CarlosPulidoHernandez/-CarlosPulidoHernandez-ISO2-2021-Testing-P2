@@ -1,7 +1,7 @@
-package A03.P2;
+package a03.p2;
 
 public class NoSeatsAvailableException extends Exception{
-	public NoSeatsAvailableException (String errorMessage) {
+	public NoSeatsAvailableException (final String errorMessage) {
 		super(errorMessage);
 	}
 }

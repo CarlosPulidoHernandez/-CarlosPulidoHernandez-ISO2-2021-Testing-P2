@@ -1,7 +1,7 @@
-package A03.P2;
+package a03.p2;
 
 public class NotAllowedValueException extends Exception{
-	public NotAllowedValueException (String errorMessage) {
+	public NotAllowedValueException (final String errorMessage) {
 		super(errorMessage);
 	}
 }
