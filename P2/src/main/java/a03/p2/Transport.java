@@ -1,14 +1,22 @@
 package a03.p2;
 
-public class Transport {
+public class Transport{
 	
-	private int totalNumberSeats;
+	private final int totalNumberSeats;
 	private int normalSeats;
-	private int essentialProfessionsSeats;
+	private int essentialProf;
 	private int level;
-	private double ticketPrice;
+	private final double ticketPrice;
 	
-	public Transport(int totalNumberSeats, double ticketPrice) throws NotAllowedValueException {
+	private final static double MINOR_AGE_LIMIT = 23;
+	private final static double MAJOR_AGE_LIMIT = 65;
+	
+	private final static double LEVEL_0 = 0;
+	private final static double LEVEL_1 = 1;
+	private final static double LEVEL_2 = 2;
+	private final static double LEVEL_3 = 3;
+	
+	public Transport(final int totalNumberSeats, final double ticketPrice) throws NotAllowedValueException {
 		this.totalNumberSeats = totalNumberSeats;
 		this.ticketPrice = ticketPrice;	
 		if(this.totalNumberSeats < 0 || this.ticketPrice < 0) {
@@ -22,73 +30,73 @@ public class Transport {
 		if(this.totalNumberSeats>=0 && this.totalNumberSeats<100) { // LEVEL 0
 			this.level = 0;
 			this.normalSeats = this.totalNumberSeats;
-			this.essentialProfessionsSeats = 0;
+			this.essentialProf = 0;
 		} else if(this.totalNumberSeats>=100 && this.totalNumberSeats<=200) { // LEVEL 1
 			this.level = 1;
 			this.normalSeats = (int) (0.8 * this.totalNumberSeats);
-			this.essentialProfessionsSeats = 0;
+			this.essentialProf = 0;
 		} else if(this.totalNumberSeats>=201 && this.totalNumberSeats<=300) { // LEVEL 2
 			this.level = 2;
 			this.normalSeats = (int) (0.6 * this.totalNumberSeats);
-			this.essentialProfessionsSeats = (int) (0.6 * this.normalSeats);
-			this.normalSeats -= this.essentialProfessionsSeats;
+			this.essentialProf = (int) (0.6 * this.normalSeats);
+			this.normalSeats -= this.essentialProf;
 		} else if(this.totalNumberSeats>=301 && this.totalNumberSeats<=500) { // LEVEL 3
 			this.level = 3;
 			this.normalSeats = (int) (0.4 * this.totalNumberSeats); 
-			this.essentialProfessionsSeats = (int) (0.8 * this.normalSeats);
-			this.normalSeats -= this.essentialProfessionsSeats;
+			this.essentialProf = (int) (0.8 * this.normalSeats);
+			this.normalSeats -= this.essentialProf;
 		} else { // LEVEL 4
 			this.level = 4;
 			this.normalSeats = (int) (0.3 * this.totalNumberSeats);
-			this.essentialProfessionsSeats = (int) (0.9 * this.normalSeats);
-			this.normalSeats -= this.essentialProfessionsSeats;
+			this.essentialProf = (int) (0.9 * this.normalSeats);
+			this.normalSeats -= this.essentialProf;
 		}
 		
 	}
 	
-	public double getTicket(Person person) throws NotHealthyException, NoSeatsAvailableException {
+	public double getTicket(final Person person) throws NotHealthyException, NoSeatsAvailableException {
 		checkHealthConditions(person);	
 		assignSeat(person);
 		return calculateTicketCost(person);
 	}
 		
-	public double calculateTicketCost(Person person) throws NoSeatsAvailableException {
+	public double calculateTicketCost(final Person person) throws NoSeatsAvailableException {
 		double price = 0;
-	
-		if(this.level == 0) {
-			if(person.getAge() < 23) {
+		
+		if(this.level == LEVEL_0) {
+			if(person.getAge() < MINOR_AGE_LIMIT) {
 				price = 0.4 * this.ticketPrice;
-			}else if(person.getAge() > 65) {
+			}else if(person.getAge() > MAJOR_AGE_LIMIT) {
 				price = 0.2 * this.ticketPrice;		
 			}else {
 				price = this.ticketPrice;
 			}		
-		}else if(this.level == 1){
-			if(person.getAge() < 23) {
+		}else if(this.level == LEVEL_1){
+			if(person.getAge() < MINOR_AGE_LIMIT) {
 				price = 0.7 * this.ticketPrice;
-			}else if (person.getAge() > 65) {
+			}else if (person.getAge() > MAJOR_AGE_LIMIT) {
 				price = 0.5 * this.ticketPrice;
 			}else {
 				price = this.ticketPrice;
 			}
-		}else if(this.level == 2) {
-			if (person.getAge() > 65) {
+		}else if(this.level == LEVEL_2) {
+			if (person.getAge() > MAJOR_AGE_LIMIT) {
 				price = 1.2 * this.ticketPrice;
 			}else {
 				price = this.ticketPrice;
 			}	
-		}else if(this.level == 3) {
-			if(person.getAge() < 23) {
+		}else if(this.level == LEVEL_3) {
+			if(person.getAge() < MINOR_AGE_LIMIT) {
 				price = 1.2 * this.ticketPrice;
-			}else if (person.getAge() > 65) {
+			}else if (person.getAge() > MAJOR_AGE_LIMIT) {
 				price = 1.5 * this.ticketPrice;
 			}else {
 				price = this.ticketPrice;
 			}				
 		}else{
-			if(person.getAge() < 23) {
+			if(person.getAge() < MINOR_AGE_LIMIT) {
 				price = 1.5 * this.ticketPrice;
-			}else if (person.getAge() > 65) {
+			}else if (person.getAge() > MAJOR_AGE_LIMIT) {
 				throw new NoSeatsAvailableException("You are not allowed to travel");
 			}else {
 				price = this.ticketPrice;
@@ -98,16 +106,16 @@ public class Transport {
 		return price;
 	}
 	
-	public void checkHealthConditions(Person person) throws NotHealthyException {	
+	public void checkHealthConditions(final Person person) throws NotHealthyException {	
 		if(!person.isCOVIDPassport() || person.isIll()) {
 			throw new NotHealthyException("You are not allowed to travel in those conditions");
 		}
 	}
 	
-	public void assignSeat(Person person) throws NoSeatsAvailableException {	
+	public void assignSeat(final Person person) throws NoSeatsAvailableException {	
 		if(person.isEssentialProfession() && (this.level == 2 || this.level == 3 || this.level == 4)) {
 			if(isEssentialProfessionsSeats()) {
-				this.essentialProfessionsSeats -= 1;
+				this.essentialProf -= 1;
 			}else if(isNormalSeats()) {
 				this.normalSeats -= 1;
 			}else {
@@ -123,19 +131,11 @@ public class Transport {
 	}
 		
 	public boolean isNormalSeats(){
-		if(this.normalSeats-1 >= 0){
-			return true;
-		}else{
-			return false;
-		}
+		return this.normalSeats-1 >= 0;
 	}
 	
 	public boolean isEssentialProfessionsSeats(){
-		if(this.essentialProfessionsSeats-1 >= 0){
-			return true;
-		}else{
-			return false;
-		}
+		return this.essentialProf-1 >= 0;
 	}
 
 	public int getTotalNumberSeats() {
@@ -147,14 +147,14 @@ public class Transport {
 	}
 
 	public int getEssentialProfessionsSeats() {
-		return essentialProfessionsSeats;
+		return essentialProf;
 	}
 
 	public int getLevel() {
 		return level;
 	}
 
-	public void setLevel(int level) throws NotAllowedValueException {
+	public void setLevel(final int level) throws NotAllowedValueException {
 		if(level < 0 || level > 4) {
 			throw new NotAllowedValueException("Level mut be between 0 and 4");
 		}
