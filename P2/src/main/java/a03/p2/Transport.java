@@ -1,12 +1,20 @@
 package a03.p2;
 
-public class Transport implements I_Transport{
+public class Transport{
 	
 	private final int totalNumberSeats;
 	private int normalSeats;
 	private int essentialProf;
 	private int level;
 	private final double ticketPrice;
+	
+	private final static double MINOR_AGE_LIMIT = 23;
+	private final static double MAJOR_AGE_LIMIT = 65;
+	
+	private final static double LEVEL_0 = 0;
+	private final static double LEVEL_1 = 1;
+	private final static double LEVEL_2 = 2;
+	private final static double LEVEL_3 = 3;
 	
 	public Transport(final int totalNumberSeats, final double ticketPrice) throws NotAllowedValueException {
 		this.totalNumberSeats = totalNumberSeats;
@@ -54,7 +62,7 @@ public class Transport implements I_Transport{
 		
 	public double calculateTicketCost(final Person person) throws NoSeatsAvailableException {
 		double price = 0;
-	
+		
 		if(this.level == LEVEL_0) {
 			if(person.getAge() < MINOR_AGE_LIMIT) {
 				price = 0.4 * this.ticketPrice;
